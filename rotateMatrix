@@ -16,14 +16,12 @@ public class Solution {
 			}
 		}
 		int rings = Math.min(R,C)/2;
-		int RC = R*C;
 		int RplusC = R+C;
-		int optimizedN = N;
+		int optimizedN;
 		for(int i = 0; i<rings; i++){
-				optimizedN = N % (2*(RplusC - 4*i - 2));    
-			}
+			optimizedN = N % (2*(RplusC - 4*i - 2));    
 			matrix = rotateRing(matrix,optimizedN,R,C,i);
-			R--; C--;
+			R--; C--; // i is incremented and R,C are decremented every iteration to rotate the next inner ring 
 		}
 		for(int i = 0;i<matrix.length;i++){
 			for(int j = 0; j<matrix[0].length;j++){
@@ -32,12 +30,14 @@ public class Solution {
 			System.out.println();
 		}
 	}
-
+	//this function rotates 1 ring at a time, optimizedN times. starting from outermost and moves inwards.
 	public static int [][] rotateRing(int matrix[][], int optimizedN, int Rarg, int Carg, int iarg){
 		for(int n = 0; n<optimizedN; n++){
 			int r = iarg, c= iarg, cur, prev;
 			int R = Rarg; 
 			int C = Carg;
+			//this loop rotates a ring exactly once. left column - up to down, 
+			//bottom row left to right, right column down to up,top row right to left.
 			while(r<R && c<C){
 				//if(r+1 == R || c+1 == C) break;
 				prev = matrix[r][c+1];
